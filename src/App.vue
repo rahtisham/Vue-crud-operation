@@ -1,30 +1,54 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <div>
+    <AddTodo v-on:add-todo="addTodo"/>
+    <Todos v-bind:todos="todos" v-on:del-todo="deleteTodo"/>
   </div>
-  <router-view/>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Todos from './components/Todos';
+import AddTodo from './components/AddTodo'
 
-#nav {
-  padding: 30px;
+export default {
+  name: 'App',
+  data(){
+    return {
+      todos:[
+        {
+          id:1,
+          title:"Ahtisham",
+          completed:false
+        },
+        {
+          id:2,
+          title:"Salman",
+          completed:true
+        },
+        {
+          id:3,
+          title:"Khan",
+          completed:false
+        },
+        {
+          id:4,
+          title:"Arsalan",
+          completed:true
+        }
+      ]
+    }
+  },
+  components: {
+    Todos,
+    AddTodo
+  },
+  methods:{
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+    addTodo(newTodo){
+      this.todos = [...this.todos,newTodo]
+    },
+    deleteTodo(id){
+      this.todos = this.todos.filter((todo) => todo.id !== id)
     }
   }
-}
-</style>
+};
+</script>
